@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Timeline Digital Pancasila</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <style>
+      :root {
+        --bg: #0b1220;
+        --card: rgba(255, 255, 255, 0.04);
+      }
+      html,
+      body {
+        height: 310vh;
+      }
+      body {
+        background: linear-gradient(
+          180deg,
+          #071025 0%,
+          #071026 60%,
+          #071029 100%
+        );
+        color: #e6eef8;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* float diagonal
+      @keyframes floatXY {
+        0% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(18px, -18px);
+        }
+        50% {
+          transform: translate(0, -36px);
+        }
+        75% {
+          transform: translate(-18px, -18px);
+        }
+        100% {
+          transform: translate(0, 0);
+        }
+      }
+
+      .float-diagonal {
+        animation: floatXY 8s ease-in-out infinite;
+      } */
+
+      /* float gentle */
+      @keyframes floatY {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-38px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .float-slow {
+        animation: floatY 4s ease-in-out infinite;
+      }
+
+      /* gradient text white -> blue */
+      .g-white-blue {
+        background: linear-gradient(90deg, #ffffff 0%, #ac3ad9 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* subtle glass card */
+      .glass {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(6px);
+      }
+
+      /* TIMELINE STYLE */
+      .swiper-slide {
+        transition: transform 0.5s;
+        cursor: pointer;
+        position: relative;
+        border-radius: 1rem;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        height: 350px;
+      }
+      .timeline-line {
+        height: 4px;
+        background-color: #2563eb;
+        position: absolute;
+        top: 18px;
+        left: 0;
+        right: 0;
+        z-index: 1;
+      }
+      .timeline-marker {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: #2feb25;
+        border: 3px solid #0f172a;
+        position: absolute;
+        top: 12px;
+        z-index: 4;
+      }
+      .slide-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.767);
+        z-index: 1;
+      }
+      .slide-content {
+        position: relative;
+        z-index: 2;
+        padding: 1rem;
+        text-align: left;
+      }
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 50;
+      }
+      .modal-content {
+        background: #1f2937;
+        padding: 2rem;
+        border-radius: 1rem;
+        max-width: 700px;
+        width: 90%;
+        text-align: left;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-content img {
+        width: 100%;
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #fff;
+      }
+
+      .text-carousel {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 130px;
+      }
+
+      .carousel-container2 {
+        margin-top: 5px;
+        position: relative;
+        width: 100%;
+      }
+
+      .card-carousel {
+        display: flex;
+        padding: 20px;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+      }
+
+      .card {
+        user-select: none;
+        width: 200px;
+        height: 250px;
+        margin: 20px 20px 0px 20px;
+        display: flex;
+        background: #111c32;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transform: 0.8;
+        transform-style: preserve-3d;
+        transition: transform 0.9s, opacity 0.5s;
+        position: relative;
+        z-index: 1;
+        border-radius: 15px;
+        opacity: 0.6;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.311); /* Soft shadow for better visibility */
+      }
+
+      .card img {
+        user-select: none;
+        pointer-events: none;
+        border-radius: 10px;
+        margin-top: 10px;
+        max-height: 160px;
+        object-fit: cover;
+      }
+
+      .card-content {
+        padding: 10px;
+      }
+
+      .card-content h3 {
+        color: #ffffff;
+        font-weight: 700;
+      }
+
+      .card.inactive {
+        transition: 0.7s;
+        opacity: 2.1;
+        transform: translateY(-40px);
+        /* pointer-events: none; */
+        z-index: 4;
+      }
+
+      @media screen and (max-width: 600px) {
+        .card-carousel {
+          flex-direction: column;
+        }
+
+        .card {
+          margin: 20px auto;
+          height: auto;
+          width: 200px;
+          padding: 10px;
+        }
+
+        .card img {
+          margin-top: 20px;
+          width: 120px;
+          height: auto;
+        }
+
+        .card.inactive {
+          transition: 0.7s;
+          opacity: 1.9;
+          transform: scale(1.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HERO -->
+    <main class="max-w-7xl bg-purple-800 mx-auto py-0 px-10">
+      <section class="flex flex-col-reverse md:flex-row gap-8 items-center">
+        <!-- kiri -->
+        <div class="space-y-6">
+          <h1
+            class="text-4xl py-2 md:text-5xl font-extrabold leading-tight g-white-blue"
+          >
+            6 Peristiwa Penting
+          </h1>
+          <p class="text-slate-300 max-w-xl">
+            Menelusuri momen-momen bersejarah yang melahirkan Pancasila — serta
+            menghubungkannya dengan tantangan etika dan profesionalisme di
+            bidang Teknologi Informasi pada era digital.
+          </p>
+          <div class="flex items-center gap-4">
+            <a
+              href="#timeline"
+              class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-white/10 to-white/6 border border-white/6 text-sm font-semibold hover:scale-105 transition"
+            >
+              Mulai Jelajah →
+            </a>
+          </div>
+        </div>
+        <!-- kanan -->
+        <div class="flex justify-center md:justify-end">
+          <div class="w-72 md:w-[470px]">
+            <img
+              src="img/bg.png"
+              alt="Sejarah & Teknologi"
+              class="w-full rounded-xl float-slow"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <path
+        fill="#6B21A8"
+        fill-opacity="1"
+        d="M0,128L30,117.3C60,107,120,85,180,90.7C240,96,300,128,360,154.7C420,181,480,203,540,186.7C600,171,660,117,720,133.3C780,149,840,235,900,250.7C960,267,1020,213,1080,165.3C1140,117,1200,75,1260,80C1320,85,1380,139,1410,165.3L1440,192L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z"
+      ></path>
+    </svg>
+
+    <div class="carousel-container">
+      <div class="my-skill">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2 text-carousel">
+          Anggota kelompok 5
+        </h1>
+      </div>
+      <div class="card-carousel">
+        <div class="card">
+          <img class="img-carousel" src="img/aril.png" alt="Image 1" />
+          <div class="card-content">
+            <h3>Muhammad Ariel Syahban</h3>
+          </div>
+        </div>
+        <div class="card">
+          <img class="img-carousel" src="img/baim.png" alt="Image 2" />
+          <div class="card-content">
+            <h3>Ibrahim Ilham Cahyana</h3>
+          </div>
+        </div>
+        <div class="card">
+          <img class="img-carousel" src="img/thal.png" alt="Image 3" />
+          <div class="card-content">
+            <h3>Tubagus Athalla Nibras Islamy</h3>
+          </div>
+        </div>
+        <div class="card">
+          <img class="img-carousel" src="img/ngepep.png" alt="Image 4" />
+          <div class="card-content">
+            <h3>Fachry Fauzan Faturrahman</h3>
+          </div>
+        </div>
+        <div class="card">
+          <img class="img-carousel" src="img/dafi.png" alt="Image 5" />
+          <div class="card-content">
+            <h3>Mohammad Khadafi</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <section id="timeline" class="py-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-2">Timeline Of Indonesia</h1>
+      <p class="text-gray-400">Sejarah penting yang terjadi di Indonesia</p>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 relative">
+      <div class="timeline-line"></div>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <!-- Slide 1 -->
+          <div
+            class="swiper-slide"
+            style="background-image: url('img/bpupki.jpg')"
+            data-desc="Menurut Sejarah Perumusan Pancasila dari Jurnal Universitas Sebelas Maret (UNS), sidang pertama BPUPKI menjadi wadah untuk membahas dasar negara Indonesia. Dalam sidang ini muncul usulan dari Mohammad Yamin, Soepomo, dan Soekarno, yang akhirnya mengarah pada lahirnya Pancasila sebagai dasar negara.
+            - (Sumber: Jurnal UNS – Sejarah Perumusan Pancasila.)"
+          >
+            <div class="slide-overlay"></div>
+            <div class="timeline-marker" style="left: 50%"></div>
+            <div class="slide-content">
+              <span class="text-blue-300 font-semibold uppercase"
+                >29 Mei – 1 Juni 1945</span
+              >
+              <h3 class="text-xl font-bold mt-1 mb-2">Sidang BPUPKI</h3>
+              <p>
+                Penjelasan: Sidang pertama BPUPKI membahas dasar negara
+                Indonesia, muncul berbagai usulan termasuk Pancasila dari
+                Soekarno.
+              </p>
+              <p class="my-2">
+                Nilai Pancasila: Persatuan Indonesia (Sila ke-3).
+              </p>
+              <p>
+                Relevansi IT: Pentingnya kolaborasi dan menjaga persatuan dalam
+                tim teknologi.
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div
+            class="swiper-slide"
+            style="background-image: url('img/pidato.jpg')"
+            data-desc="Marzuki, Wiji Audi Claudia, dan Yulia Andriani dalam Jurnal Pendidikan Tambusai menjelaskan bahwa pada 1 Juni 1945, Soekarno menyampaikan pidatonya di BPUPKI dan memperkenalkan istilah “Pancasila” sebagai dasar negara. Pidato ini dianggap tonggak sejarah lahirnya Pancasila. - (Sumber: Marzuki dkk., Sejarah Lahirnya Pancasila, Jurnal Pendidikan Tambusai.)"
+          >
+            <div class="slide-overlay"></div>
+            <div class="timeline-marker" style="left: 50%"></div>
+            <div class="slide-content">
+              <span class="text-blue-200 text-sm font-semibold uppercase"
+                >1 Juni 1945</span
+              >
+              <h3 class="text-xl font-bold mt-1 mb-2">Pidato Soekarno</h3>
+              <p>
+                Penjelasan: Soekarno memperkenalkan konsep Pancasila sebagai
+                dasar negara dalam sidang BPUPKI.
+              </p>
+              <p class="my-2">
+                Nilai Pancasila: Ketuhanan Yang Maha Esa (Sila ke-1), Keadilan
+                Sosial (Sila ke-5).
+              </p>
+              <p>
+                Relevansi IT: Etika digital (menghindari plagiarisme coding) dan
+                membangun aplikasi bermanfaat bagi masyarakat.
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div
+            class="swiper-slide"
+            style="background-image: url('img/piagam.jpg')"
+            data-desc="Menurut Muhammad Luthfi Lazuardi & Moses Glorino Rumambo Pandin dalam artikel Jalan Sunyi Kompromi Tujuh Kata Piagam Jakarta di ResearchGate, Piagam Jakarta merupakan hasil kompromi antara golongan Islam dan nasionalis. Peristiwa ini memperlihatkan bagaimana semangat persatuan ditempatkan di atas kepentingan golongan. - (Sumber: Lazuardi & Pandin, Jalan Sunyi Kompromi Tujuh Kata Piagam Jakarta.)"
+          >
+            <div class="slide-overlay"></div>
+            <div class="timeline-marker" style="left: 50%"></div>
+            <div class="slide-content">
+              <span class="text-blue-400 text-sm font-semibold uppercase"
+                >22 Juni 1945</span
+              >
+              <h3 class="text-xl font-bold mt-1 mb-2">Piagam Jakarta</h3>
+              <p>
+                Penjelasan: Komite Sembilan menghasilkan Piagam Jakarta sebagai
+                kompromi antar golongan untuk menjaga persatuan bangsa.
+              </p>
+              <p class="my-2">
+                Nilai Pancasila: Kerakyatan yang Dipimpin oleh Hikmat
+                Kebijaksanaan (Sila ke-4).
+              </p>
+              <p>
+                Relevansi IT: Musyawarah digital, penerapan demokrasi dalam
+                forum online, kolaborasi open source.
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div
+            class="swiper-slide"
+            style="background-image: url('img/proklamasi.jpg')"
+            data-desc="M. I. Syarif dalam tulisannya Spirit Piagam Jakarta dalam Undang-Undang Dasar menjelaskan bahwa setelah proklamasi, UUD 1945 segera disahkan sebagai konstitusi negara. Proses ini merupakan penyempurnaan dari Piagam Jakarta, dengan penghapusan “tujuh kata” agar seluruh rakyat Indonesia bisa diterima dalam semangat persatuan. - (Sumber: M. I. Syarif, Spirit Piagam Jakarta dalam UUD, Neliti.) "
+          >
+            <div class="slide-overlay"></div>
+            <div class="timeline-marker" style="left: 50%"></div>
+            <div class="slide-content">
+              <span class="text-blue-400 text-sm font-semibold uppercase"
+                >17 Agustus 1945</span
+              >
+              <h3 class="text-xl font-bold mt-1 mb-2">Proklamasi & UUD 1945</h3>
+              <p>
+                Penjelasan: Proklamasi menandai kemerdekaan Indonesia, disusul
+                pengesahan UUD 1945 sebagai dasar hukum negara.
+              </p>
+              <p class="my-2">
+                Nilai Pancasila: Mencerminkan seluruh sila sebagai landasan
+                negara.
+              </p>
+              <p>
+                Relevansi IT: Menjadi landasan regulasi teknologi, menjaga
+                keamanan siber sesuai hukum.
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div
+            class="swiper-slide"
+            style="background-image: url('img/pki.jpg')"
+            data-desc="Dalam berbagai kajian sejarah di jurnal akademis, G30S/PKI dipandang sebagai ancaman ideologi yang kemudian melahirkan kebijakan penguatan ideologi negara. Salah satunya melalui TAP MPR No. II/1978 tentang P4, yang menekankan internalisasi Pancasila dalam kehidupan sehari-hari. - (Sumber: Artikel akademik tentang TAP MPR No. II/1978, misalnya di jurnal pendidikan politik Indonesia.)"
+          >
+            <div class="slide-overlay"></div>
+            <div class="timeline-marker" style="left: 50%"></div>
+            <div class="slide-content">
+              <span class="text-blue-400 text-sm font-semibold uppercase"
+                >1965</span
+              >
+              <h3 class="text-xl font-bold mt-1 mb-2">
+                G30S/PKI & Lahirnya P-4
+              </h3>
+              <p>
+                Penjelasan: Peristiwa G30S/PKI menjadi ancaman ideologi,
+                sehingga lahir P-4 (Pedoman Penghayatan dan Pengamalan
+                Pancasila).
+              </p>
+              <p class="my-2">
+                Nilai Pancasila: Kemanusiaan yang Adil dan Beradab (Sila ke-2),
+                Persatuan Indonesia (Sila ke-3).
+              </p>
+              <p>
+                Relevansi IT: Pentingnya melawan penyalahgunaan data, hoaks, dan
+                propaganda digital yang bisa memecah persatuan.
+              </p>
+            </div>
+          </div>
+
+          <!-- Slide 6 -->
+          <div
+            class="swiper-slide"
+            style="background-image: url('img/reformasi.jpg')"
+            data-desc="Menurut banyak penelitian, salah satunya di Jurnal Ilmu Sosial dan Ilmu Politik UGM, Reformasi 1998 menandai berakhirnya Orde Baru dan menghidupkan kembali demokrasi di Indonesia. Dalam era ini, Pancasila diposisikan sebagai pedoman etika dalam demokrasi, hak asasi, serta dalam menghadapi tantangan globalisasi. - (Sumber: Jurnal UGM – Reformasi dan Reposisi Pancasila dalam Demokrasi Indonesia.)"
+          >
+            <div class="slide-overlay"></div>
+            <div class="timeline-marker" style="left: 50%"></div>
+            <div class="slide-content">
+              <span class="text-blue-400 text-sm font-semibold uppercase"
+                >1998</span
+              >
+              <h3 class="text-xl font-bold mt-1 mb-2">Reformasi</h3>
+              <p>
+                Penjelasan: Reformasi membuka jalan bagi demokrasi dan penegakan
+                HAM, serta memperkuat aktualisasi Pancasila dalam kehidupan
+                berbangsa.
+              </p>
+              <p class="my-2">
+                Nilai Pancasila: Kerakyatan (Sila ke-4), Keadilan Sosial (Sila
+                ke-5).
+              </p>
+              <p>
+                Relevansi IT: Kebebasan berpendapat di media sosial, pemerataan
+                akses teknologi, dan aplikasi inklusif untuk semua.
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- nav -->
+        <div class="swiper-pagination mt-8"></div>
+        <div class="swiper-button-prev !text-white"></div>
+        <div class="swiper-button-next !text-white"></div>
+      </div>
+    </section>
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2 class="modal-title text-2xl font-bold mb-2"></h2>
+        <p class="modal-date text-blue-400 mb-4"></p>
+        <img class="modal-img" src="" alt="" />
+        <p class="modal-desc mt-2 leading-relaxed"></p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-8 mt-10">
+      <div class="max-w-6xl mx-auto px-6">
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center text-center md:text-left"
+        >
+          <!-- Kiri -->
+          <div>
+            <h3 class="text-lg font-semibold text-purple-400">Kelomopk 5 Tugas Pancasila</h3>
+            <p class="text-sm text-gray-400 mt-2">
+              Dibuat dengan oleh Kelompok 5.
+            </p>
+          </div>
+
+          <!-- Tengah -->
+          <div>
+            <h4 class="font-semibold text-purple-300">Thanks to</h4>
+            <p class="mt-2 text-sm leading-relaxed">
+              Muhammad Ariel Syahban <br />
+              Ibrahim Ilham Cahyana <br />
+              Tubagus Athalla Nibras Islamy <br />
+              Fachry Fauzan Faturrahman <br />
+              Mohammad Khadafi
+            </p>
+          </div>
+
+          <!-- Kanan -->
+          <div>
+            <h4 class="font-semibold text-purple-300">Group</h4>
+            <p class="mt-2 text-sm">
+              5
+            </p>
+          </div>
+        </div>
+
+        <!-- Garis -->
+        <div
+          class="border-t border-gray-700 mt-6 pt-4 text-center text-sm text-gray-500"
+        >
+          © 2025 Kelompok 5. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        slidesPerView: 1,
+        spaceBetween: 40,
+        loop: false,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        pagination: { el: ".swiper-pagination", clickable: true },
+        grabCursor: true,
+        breakpoints: { 640: { slidesPerView: 1 }, 1024: { slidesPerView: 2 } },
+      });
+
+      // Modal
+      const modal = document.getElementById("modal");
+      const modalTitle = modal.querySelector(".modal-title");
+      const modalDate = modal.querySelector(".modal-date");
+      const modalImg = modal.querySelector(".modal-img");
+      const modalDesc = modal.querySelector(".modal-desc");
+      const modalClose = modal.querySelector(".modal-close");
+
+      document.querySelectorAll(".swiper-slide").forEach((slide) => {
+        slide.addEventListener("click", () => {
+          modalTitle.textContent = slide.querySelector("h3").textContent;
+          modalDate.textContent = slide.querySelector("span").textContent;
+          modalImg.src = slide.style.backgroundImage.slice(5, -2);
+          modalDesc.textContent = slide.getAttribute("data-desc");
+          modal.style.display = "flex";
+        });
+      });
+
+      modalClose.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+      window.addEventListener("click", (e) => {
+        if (e.target == modal) modal.style.display = "none";
+      });
+
+      const cards = document.querySelectorAll(".card");
+      let currentCard = 0;
+
+      function showNextCard() {
+        cards[currentCard].classList.remove("inactive");
+        currentCard = (currentCard + 1) % cards.length;
+        cards[currentCard].classList.add("inactive");
+      }
+
+      // Tampilkan kartu pertama saat halaman dimuat
+      showNextCard();
+
+      // Set interval untuk mengganti kartu setiap beberapa detik
+      setInterval(showNextCard, 2000); // Ganti setiap 5 detik (sesuaikan sesuai kebutuhan)
+    </script>
+  </body>
+</html>

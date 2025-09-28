@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Timeline Digital - Pancasila</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: rgba(255,255,255,0.04);
+    }
+    html,body { height: 100%; }
+    body {
+      background: linear-gradient(180deg,#071025 0%, #071026 60%, #071029 100%);
+      color: #e6eef8;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* float gentle */
+    @keyframes floatY {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+      100% { transform: translateY(0); }
+    }
+
+    .float-slow { animation: floatY 6s ease-in-out infinite; }
+
+    /* gradient text white -> blue */
+    .g-white-blue {
+      background: linear-gradient(90deg,#ffffff 0%, #9ad3ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* subtle glass card */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      backdrop-filter: blur(6px);
+    }
+
+    /* modal */
+    .modal-backdrop { background: rgba(2,6,23,0.7); }
+
+    /* print styles for the written explanation */
+    @media print {
+      body * { visibility: hidden; }
+      #printable, #printable * { visibility: visible; }
+      #printable { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV / HEADER -->
+  <header class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+      <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center text-black font-bold">PD</div>
+      <div>
+        <div class="text-white font-semibold">Timeline Digital</div>
+        <div class="text-xs text-slate-400">Peristiwa penting & relevansi Pancasila</div>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button id="btnPrint" class="px-4 py-2 rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 text-sm font-medium shadow hover:scale-105 transition">Print Report (PDF)</button>
+    </div>
+  </header>
+
+  <!-- HERO: kiri teks (gradient) + kanan gambar floating -->
+  <main class="max-w-7xl ">
+    <section class="grid md:grid-cols-2 gap-8 items-center py-8">
+      <!-- kiri -->
+      <div class="space-y-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight g-white-blue">
+          6 Peristiwa Penting
+        </h1>
+        <p class="text-slate-300 max-w-xl">
+          Menelusuri momen-momen bersejarah yang melahirkan dan mengaktualisasikan Pancasila — serta menghubungkannya dengan tantangan etika dan profesionalisme di bidang Teknologi Informasi pada era digital.
+        </p>
+        <div class="flex items-center gap-4">
+          <a href="#timeline" class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-white/10 to-white/6 border border-white/6 text-sm font-semibold hover:scale-105 transition">
+            Mulai Jelajah
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="#dbeafe"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </a>
+
+          <a href="#penjelasan" class="text-sm text-slate-400 hover:text-slate-100">Ringkasan Tertulis ↓</a>
+        </div>
+      </div>
+
+      <!-- kanan: gambar floating -->
+      <div class="flex justify-center md:justify-end">
+        <!-- gunakan gambar placeholder; ganti src sesuai file nyata -->
+        <div class="w-72 md:w-[440px] rounded-2xl overflow-hidden glass p-4 shadow-lg">
+          <img src="https://images.unsplash.com/photo-1505238680356-667803448bb6?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="Ilustrasi sejarah & teknologi" class="w-full rounded-xl float-slow" />
+          <div class="mt-3 text-xs text-slate-300">
+            Ilustrasi: perjalanan sejarah & transformasi digital
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE (GRID of cards) -->
+    <section id="timeline" class="py-8">
+      <h2 class="text-2xl font-semibold mb-6">Timeline Pancasila — Peristiwa & Relevansi</h2>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Card template (6 cards) -->
+        <!-- 1 -->
+        <article class="p-5 rounded-xl glass shadow hover:scale-[1.02] transition cursor-pointer" data-title="Sidang BPUPKI" data-date="29 Mei–1 Juni 1945" data-img="https://i.imgur.com/3sA4QbB.jpg" data-desc="Sidang BPUPKI menghadirkan diskusi tentang dasar negara — ruang gagasan bagi lahirnya Pancasila." data-values="Persatuan, Musyawarah" data-relevance="Nilai persatuan dan musyawarah menuntut profesional TI agar merancang sistem kolaboratif yang inklusif, memperhatikan aksesibilitas dan kebijakan akses data yang adil.">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-blue-600/20 flex items-center justify-center text-blue-200 font-semibold">1</div>
+            <div>
+              <div class="text-sm text-slate-400 uppercase">29 Mei–1 Juni 1945</div>
+              <h3 class="font-semibold text-lg">Sidang BPUPKI</h3>
+              <p class="text-slate-300 mt-2 text-sm">Ruang pembahasan dasar negara yang nantinya melahirkan ide-ide awal Pancasila.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="p-5 rounded-xl glass shadow hover:scale-[1.02] transition cursor-pointer" data-title="Pidato Soekarno" data-date="1 Juni 1945" data-img="https://i.imgur.com/8Qf6wVZ.jpg" data-desc="Soekarno memperkenalkan lima dasar yang dinamakan Pancasila; momen simbolik kelahiran Pancasila." data-values="Kebangsaan, Kemanusiaan" data-relevance="Nilai kebangsaan & kemanusiaan relevan untuk etika desain produk teknologi: hindari bias, prioritaskan keberagaman pengguna, dan hormati hak asasi digital.">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-indigo-600/20 flex items-center justify-center text-indigo-200 font-semibold">2</div>
+            <div>
+              <div class="text-sm text-slate-400 uppercase">1 Juni 1945</div>
+              <h3 class="font-semibold text-lg">Pidato Soekarno — Lahirnya Pancasila</h3>
+              <p class="text-slate-300 mt-2 text-sm">Perumusan lima dasar negara yang menjadi landasan berbangsa.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="p-5 rounded-xl glass shadow hover:scale-[1.02] transition cursor-pointer" data-title="Piagam Jakarta" data-date="22 Juni 1945" data-img="https://i.imgur.com/ABcX2g9.jpg" data-desc="Piagam Jakarta merupakan cikal bakal Pembukaan UUD 1945; menunjukkan dinamika kompromi politik." data-values="Musyawarah, Keadilan" data-relevance="Kompleksitas kompromi mengingatkan pentingnya governance & kebijakan TI yang adil—mis. kebijakan privasi yang transparan dan proses pengambilan keputusan yang inklusif.">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-teal-600/20 flex items-center justify-center text-teal-200 font-semibold">3</div>
+            <div>
+              <div class="text-sm text-slate-400 uppercase">22 Juni 1945</div>
+              <h3 class="font-semibold text-lg">Piagam Jakarta</h3>
+              <p class="text-slate-300 mt-2 text-sm">Dokumen awal yang memberi arah pada naskah konstitusi tentang dasar negara.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="p-5 rounded-xl glass shadow hover:scale-[1.02] transition cursor-pointer" data-title="Proklamasi & UUD 1945" data-date="17 Agustus 1945" data-img="https://i.imgur.com/5Qf8r8m.jpg" data-desc="Proklamasi kemerdekaan & pengesahan UUD menandai legitimasi negara dan dasar hukum Pancasila." data-values="Kedaulatan, Keadilan" data-relevance="Kedaulatan rakyat menghubungkan tugas TI untuk menjaga kedaulatan digital: keamanan infrastruktur, kebijakan data, dan literasi digital publik.">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-rose-600/20 flex items-center justify-center text-rose-200 font-semibold">4</div>
+            <div>
+              <div class="text-sm text-slate-400 uppercase">17 Agustus 1945</div>
+              <h3 class="font-semibold text-lg">Proklamasi & Pengesahan UUD 1945</h3>
+              <p class="text-slate-300 mt-2 text-sm">Momen konsolidasi negara dan dasar konstitusional yang mapan.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="p-5 rounded-xl glass shadow hover:scale-[1.02] transition cursor-pointer" data-title="G30S/PKI & P-4" data-date="1965" data-img="https://i.imgur.com/0Q1yK8s.jpg" data-desc="Tragedi G30S/PKI memicu penguatan nilai Pancasila melalui P-4 untuk menjaga ideologi bangsa." data-values="Ketertiban, Nilai Sosial" data-relevance="Peristiwa ini menyorot kebutuhan pengembangan kebijakan keamanan, moderasi konten, dan pencegahan penyalahgunaan platform digital oleh aktor jahat.">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-yellow-600/20 flex items-center justify-center text-yellow-200 font-semibold">5</div>
+            <div>
+              <div class="text-sm text-slate-400 uppercase">1965</div>
+              <h3 class="font-semibold text-lg">G30S/PKI & Lahirnya P-4</h3>
+              <p class="text-slate-300 mt-2 text-sm">Reaksi politik yang menegaskan upaya pengamalan nilai ideologi Pancasila.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="p-5 rounded-xl glass shadow hover:scale-[1.02] transition cursor-pointer" data-title="Reformasi 1998" data-date="1998" data-img="https://i.imgur.com/7Qb2a1T.jpg" data-desc="Reformasi membuka ruang demokrasi & kebebasan yang kemudian diaktualisasikan kembali dengan nilai Pancasila di era modern." data-values="Demokrasi, Keadilan Sosial" data-relevance="Era digital menuntut profesional TI menjaga kebebasan berbicara sekaligus memerangi disinformasi, dan menjamin akses digital yang adil bagi semua lapisan masyarakat.">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-lg bg-indigo-700/20 flex items-center justify-center text-indigo-200 font-semibold">6</div>
+            <div>
+              <div class="text-sm text-slate-400 uppercase">1998</div>
+              <h3 class="font-semibold text-lg">Reformasi & Aktualisasi Pancasila</h3>
+              <p class="text-slate-300 mt-2 text-sm">Periode demokratisasi yang menempatkan kembali Pancasila sebagai pedoman moral publik.</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Penjelasan tertulis (siap dicetak 1-2 halaman) -->
+    <section id="penjelasan" class="py-10">
+      <div id="printable" class="prose prose-invert max-w-4xl">
+        <h2 class="text-2xl font-semibold mb-2">Penjelasan Tertulis — Konsep & Relevansi</h2>
+
+        <h3 class="text-lg font-semibold mt-4">Konsep Timeline</h3>
+        <p class="text-sm text-slate-300">
+          Timeline ini disusun sebagai halaman web interaktif berfokus pada enam peristiwa kunci yang berkaitan langsung dengan kelahiran dan pengembangan Pancasila. Desain memilih tata letak dua bagian: hero yang memperkenalkan tema (teks kiri, ilustrasi kanan), dan grid timeline di bawahnya. Tools: HTML, Tailwind CSS, JavaScript (vanilla) untuk interaksi modal dan print. Tujuan desain: bersih, responsif, dan profesional agar sesuai konteks tugas kuliah dan presentasi akademik.
+        </p>
+
+        <h3 class="text-lg font-semibold mt-4">Nilai-nilai Pancasila pada Setiap Peristiwa</h3>
+        <ol class="text-sm text-slate-300 list-decimal ml-5">
+          <li><strong>Sidang BPUPKI:</strong> Persatuan & musyawarah — menunjukkan proses deliberatif dalam merumuskan dasar negara.</li>
+          <li><strong>Pidato Soekarno (1 Juni 1945):</strong> Kebangsaan & kemanusiaan — dasar moral negara yang inklusif.</li>
+          <li><strong>Piagam Jakarta:</strong> Musyawarah & keadilan — menyoroti kompromi yang menjaga keutuhan bangsa.</li>
+          <li><strong>Proklamasi & UUD 1945:</strong> Kedaulatan & keadilan — memberi legitimasi hukum dan arah negara.</li>
+          <li><strong>G30S/PKI & P-4:</strong> Ketertiban & nilai sosial — penguatan nilai untuk menjaga stabilitas.</li>
+          <li><strong>Reformasi 1998:</strong> Demokrasi & keadilan sosial — aktualisasi Pancasila di era kebebasan berekspresi.</li>
+        </ol>
+
+        <h3 class="text-lg font-semibold mt-4">Relevansi bagi Mahasiswa & Profesional TI</h3>
+        <p class="text-sm text-slate-300">
+          Di era digital, profesional TI memiliki tanggung jawab lebih dari sekadar menulis kode: mereka merancang sistem yang mempengaruhi masyarakat luas. Relevansi praktis:
+        </p>
+        <ul class="text-sm text-slate-300 list-disc ml-5">
+          <li><strong>Etika digital:</strong> Menjaga privasi pengguna, mencegah bias algoritme, dan mendesain fitur yang mempertimbangkan martabat manusia (nilai kemanusiaan).</li>
+          <li><strong>Keamanan data & kedaulatan digital:</strong> Melindungi infrastruktur, data warga, serta memastikan kebijakan akses yang adil (kedaulatan & keadilan).</li>
+          <li><strong>Literasi informasi:</strong> Mengatasi disinformasi lewat desain platform dan edukasi pengguna (demokrasi & tanggung jawab sosial).</li>
+          <li><strong>Tanggung jawab sosial:</strong> Menyediakan akses teknologi yang inklusif dan mendorong program pemberdayaan komunitas (persatuan & keadilan sosial).</li>
+        </ul>
+
+        <h3 class="text-lg font-semibold mt-4">Sumber & Rujukan (contoh)</h3>
+        <p class="text-sm text-slate-300">
+          - Soekarno, pidato 1 Juni 1945; arsip nasional dan buku sejarah dasar negara.<br>
+          - Dokumen Piagam Jakarta & UUD 1945; dokumen resmi (BPHN / DPR RI).<br>
+          - Literatur tentang G30S/PKI & reformasi 1998: buku sejarah terbitan universitas dan jurnal sejarah politik.<br>
+          (Untuk penugasan: cantumkan referensi spesifik yang kalian pakai — buku, jurnal, atau situs resmi).
+        </p>
+
+        <p class="text-sm text-slate-300 mt-6">
+          Disusun oleh: <strong>Kelompok (isi nama anggota)</strong> — Mata Kuliah: <em>...</em> — Tanggal: <em>...</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-slate-400 text-sm">
+      &copy; <span id="year"></span> Timeline Digital — Pancasila. Dibuat untuk tugas kuliah.
+    </footer>
+  </main>
+
+  <!-- MODAL DETAIL -->
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center modal-backdrop z-50">
+    <div class="bg-[#071026] max-w-3xl w-full rounded-xl p-6 glass border border-white/5 shadow-xl">
+      <div class="flex items-start gap-4">
+        <img id="modalImg" src="" alt="" class="w-28 h-20 object-cover rounded-md" />
+        <div class="flex-1">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 id="modalTitle" class="text-xl font-semibold"></h3>
+              <div id="modalDate" class="text-xs text-slate-400"></div>
+            </div>
+            <button id="modalClose" class="text-slate-400 hover:text-white">✕</button>
+          </div>
+
+          <p id="modalDesc" class="mt-4 text-slate-300 text-sm"></p>
+
+          <div class="mt-4 text-sm text-slate-300">
+            <div><strong>Nilai Pancasila:</strong> <span id="modalValues"></span></div>
+            <div class="mt-2"><strong>Relevansi TI:</strong> <span id="modalRel"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // fill year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Modal behavior: open when clicking card
+    document.querySelectorAll('article[data-title]').forEach(card => {
+      card.addEventListener('click', () => {
+        const title = card.getAttribute('data-title');
+        const date = card.getAttribute('data-date');
+        const img = card.getAttribute('data-img');
+        const desc = card.getAttribute('data-desc');
+        const values = card.getAttribute('data-values');
+        const rel = card.getAttribute('data-relevance');
+
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalDate').textContent = date;
+        document.getElementById('modalImg').src = img;
+        document.getElementById('modalDesc').textContent = desc;
+        document.getElementById('modalValues').textContent = values;
+        document.getElementById('modalRel').textContent = rel;
+
+        document.getElementById('modal').classList.remove('hidden');
+        document.getElementById('modal').classList.add('flex');
+      });
+    });
+
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+    });
+
+    // Print button: print the "printable" element
+    document.getElementById('btnPrint').addEventListener('click', () => {
+      // Scroll to penjelasan to ensure correct print viewport
+      document.getElementById('penjelasan').scrollIntoView({ behavior: 'smooth' });
+      // small delay then print
+      setTimeout(() => window.print(), 550);
+    });
+
+    // Accessibility: close modal on backdrop click
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modal')) {
+        document.getElementById('modalClose').click();
+      }
+    });
+  </script>
+</body>
+</html>
